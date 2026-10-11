@@ -34,3 +34,12 @@ describe('SharePanel', () => {
     expect(writeText).toHaveBeenCalledWith('https://example.org/screen');
   });
 });
+
+describe('SharePanel QR button', () => {
+  it('opens the QR page in a new window', () => {
+    render(<SharePanel publicUrl="https://example.org" />);
+    const button = screen.getByRole('link', { name: 'Show QR code' });
+    expect(button.getAttribute('href')).toBe('https://example.org/qr');
+    expect(button.getAttribute('target')).toBe('_blank');
+  });
+});

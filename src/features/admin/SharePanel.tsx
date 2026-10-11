@@ -11,6 +11,7 @@ type CopyState = { readonly id: ShareLink['id']; readonly ok: boolean } | null;
 export function SharePanel({ publicUrl }: { readonly publicUrl: string }) {
   const [copied, setCopied] = useState<CopyState>(null);
   const links = buildShareLinks(publicUrl);
+  const qrPageUrl = links.find((link) => link.id === 'qr')?.url ?? '/qr';
 
   const copy = async (link: ShareLink) => {
     const ok = await copyText(link.url);
@@ -26,7 +27,12 @@ export function SharePanel({ publicUrl }: { readonly publicUrl: string }) {
         <div className="rounded-md border border-ink-100 bg-white p-2">
           <QrCode value={answerUrl(publicUrl)} size={160} />
         </div>
-        <p className="max-w-[220px] text-sm text-fg-muted">QR to the phone answer page. Full size at the QR code page link.</p>
+        <div className="flex min-w-[200px] flex-1 flex-col gap-3">
+          <p className="text-sm text-fg-muted">QR to the phone answer page.</p>
+          <a href={qrPageUrl} target="_blank" rel="noopener noreferrer" className="btn-primary">
+            Show QR code
+          </a>
+        </div>
       </div>
       <ul className="flex flex-col gap-3">
         {links.map((link) => (
