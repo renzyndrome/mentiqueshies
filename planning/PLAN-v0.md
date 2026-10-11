@@ -1,6 +1,6 @@
 # Quest Respond v0: one question after Sunday service
 
-Status: build today (2026-10-11). Deploy on Dokploy at https://mentiqueshie.questlaguna.org
+Status: build today (2026-10-11). Deploy on Dokploy at https://mentiqueshies.questlaguna.org
 Later sessions add: multiple questions, scale and choice types, analytics, Supabase.
 
 ## Scope of v0 (nothing more)
@@ -30,7 +30,7 @@ Later sessions add: multiple questions, scale and choice types, analytics, Supab
 ## Env
 
 - `ADMIN_KEY` (required, server side, runtime). Admin API calls send it as `x-admin-key`.
-- `PUBLIC_URL` default `https://mentiqueshie.questlaguna.org` (QR target and footer text).
+- `PUBLIC_URL` default `https://mentiqueshies.questlaguna.org` (QR target and footer text).
 - `DATA_DIR` default `/data` in Docker, `./data` in dev.
 - `PORT` default 3000.
 
@@ -71,7 +71,7 @@ Brand rules in `planning/project context.md` ("Brand rules that apply to code").
   "Change my answer" goes back to /answer with the text prefilled.
   When the question closes, show "Salamat. The question is closed." and no edit link.
 - Screen Join = ScreenJoin.dc.html with a real QR (to PUBLIC_URL), no 4-digit code,
-  show "mentiqueshie.questlaguna.org" under the QR instead.
+  show "mentiqueshies.questlaguna.org" under the QR instead.
 - Screen Cloud = ScreenCloud.dc.html: top 14 normalized tokens (lowercase, trimmed,
   punctuation stripped, Tagalog and English both kept, 1 char words dropped, stop words
   dropped for both languages). Size scales with count. Deterministic placement is fine.

@@ -58,7 +58,7 @@ ADMIN_KEY=change-me bun run start   # http://localhost:3000
 | Name         | Required | Default                                  | Notes |
 | ------------ | -------- | ---------------------------------------- | ----- |
 | `ADMIN_KEY`  | yes      | none, the server refuses to start        | Admin passcode. Sent by `/admin` as the `x-admin-key` header. Use 16 or more random characters. |
-| `PUBLIC_URL` | no       | `https://mentiqueshie.questlaguna.org`   | QR code target and the address printed on screens. |
+| `PUBLIC_URL` | no       | `https://mentiqueshies.questlaguna.org`   | QR code target and the address printed on screens. |
 | `DATA_DIR`   | no       | `./data` (dev), `/data` (Docker image)   | Folder for `respond.sqlite`. |
 | `PORT`       | no       | `3000`                                   | HTTP port. |
 
@@ -100,14 +100,14 @@ Limits and safeguards:
 1. Create an Application. Source: this repository. Build Type: **Dockerfile**, path `Dockerfile`,
    build context the repository root.
 2. Environment: set `ADMIN_KEY` (long random value, for example `openssl rand -base64 24`).
-   Set `PUBLIC_URL=https://mentiqueshie.questlaguna.org` (the default) or the real domain.
+   Set `PUBLIC_URL=https://mentiqueshies.questlaguna.org` (the default) or the real domain.
    `DATA_DIR` and `PORT` already have the right values in the image.
 3. Volumes / Mounts: add a **Volume Mount** (named volume), mount path `/data`. The SQLite file
    lives there and survives redeploys. A named volume picks up the right owner from the image.
    A bind mount needs a host folder writable by uid 1000.
-4. Domains: host `mentiqueshie.questlaguna.org`, container port **3000**, HTTPS on with
+4. Domains: host `mentiqueshies.questlaguna.org`, container port **3000**, HTTPS on with
    Let's Encrypt. Point the DNS A record at the Dokploy server first.
-5. Deploy. Check `https://mentiqueshie.questlaguna.org/api/health` returns `{"ok":true,...}`.
+5. Deploy. Check `https://mentiqueshies.questlaguna.org/api/health` returns `{"ok":true,...}`.
    The image also has a Docker `HEALTHCHECK` on that path.
 
 Notes:

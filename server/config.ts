@@ -5,7 +5,7 @@ export interface Config {
   readonly port: number;
 }
 
-export const DEFAULT_PUBLIC_URL = 'https://mentiqueshie.questlaguna.org';
+export const DEFAULT_PUBLIC_URL = 'https://mentiqueshies.questlaguna.org';
 
 type Env = Readonly<Record<string, string | undefined>>;
 

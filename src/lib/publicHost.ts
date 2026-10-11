@@ -1,4 +1,4 @@
-/** "https://mentiqueshie.questlaguna.org" becomes "mentiqueshie.questlaguna.org". */
+/** "https://mentiqueshies.questlaguna.org" becomes "mentiqueshies.questlaguna.org". */
 export function publicHost(publicUrl: string | undefined): string {
   if (publicUrl) {
     try {

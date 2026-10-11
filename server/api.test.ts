@@ -3,7 +3,7 @@ import { createApp } from './app';
 import { openDatabase } from './db';
 
 const ADMIN_KEY = 'test-admin-key-0123456789';
-const PUBLIC_URL = 'https://mentiqueshie.questlaguna.org';
+const PUBLIC_URL = 'https://mentiqueshies.questlaguna.org';
 
 type JsonBody = Record<string, unknown>;
 

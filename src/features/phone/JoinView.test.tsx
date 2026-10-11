@@ -7,7 +7,7 @@ afterEach(cleanup);
 
 const baseProps = {
   title: 'Sunday Family Service',
-  host: 'mentiqueshie.questlaguna.org',
+  host: 'mentiqueshies.questlaguna.org',
   joining: false,
   error: null,
   onJoin: () => {},
@@ -45,6 +45,6 @@ describe('JoinView', () => {
 
   it('shows the site address in the footer', () => {
     render(<JoinView {...baseProps} />);
-    expect(screen.getByText('mentiqueshie.questlaguna.org')).toBeTruthy();
+    expect(screen.getByText('mentiqueshies.questlaguna.org')).toBeTruthy();
   });
 });
