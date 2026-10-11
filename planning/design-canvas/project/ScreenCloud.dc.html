@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Big screen: word cloud</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@600&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0;background:#0B0B0C;font-family:'Manrope',system-ui,sans-serif;color:#ffffff}
+a{color:#F26A77}a:hover{color:#ffffff}
+</style>
+</helmet>
+<div style="width:1920px;height:1080px;box-sizing:border-box;background:linear-gradient(180deg,#2E0408 0%,#0B0B0C 100%);display:flex;flex-direction:column;padding:72px 120px 64px">
+
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:48px">
+    <div style="display:flex;flex-direction:column;gap:18px;max-width:1240px">
+      <div style="display:flex;align-items:center;gap:14px;font:700 18px/1 'Manrope',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F26A77">
+        <span style="letter-spacing:-.12em;color:#D81E2F;font-size:22px">›››</span>
+        <span>Question 1 of 3</span>
+      </div>
+      <h1 style="margin:0;font:600 52px/1.15 'Poppins',sans-serif;letter-spacing:-.015em;color:#ffffff">What is one promise from God you are holding on to this week?</h1>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;flex-shrink:0;border-radius:999px;border:1px solid rgba(255,255,255,.18);padding:16px 26px">
+      <span style="width:12px;height:12px;border-radius:50%;background:#E8B11F"></span>
+      <span style="font:600 28px/1 'Poppins',sans-serif;color:#ffffff">{{answers}}</span>
+      <span style="font:500 20px/1 'Manrope',sans-serif;color:#c9c2c5">answers</span>
+    </div>
+  </div>
+
+  <div style="position:relative;flex:1;margin-top:24px">
+    <div style="position:absolute;left:560px;top:150px;font:400 188px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#ffffff;letter-spacing:-.01em">Faithful</div>
+    <div style="position:absolute;left:80px;top:40px;font:400 112px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#D81E2F">Peace</div>
+    <div style="position:absolute;left:1180px;top:30px;font:400 96px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#F26A77">Provision</div>
+    <div style="position:absolute;left:1260px;top:400px;font:400 120px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#E8B11F">Healing</div>
+    <div style="position:absolute;left:60px;top:380px;font:400 80px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#FBF5E9">Hindi Niya ako iiwan</div>
+    <div style="position:absolute;left:700px;top:40px;font:400 64px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#c9c2c5">Strength</div>
+    <div style="position:absolute;left:170px;top:210px;font:400 56px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#F26A77">Hope</div>
+    <div style="position:absolute;left:1400px;top:230px;font:400 48px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#FBF5E9">New mercies</div>
+    <div style="position:absolute;left:470px;top:470px;font:400 72px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#D81E2F">Never alone</div>
+    <div style="position:absolute;left:1020px;top:490px;font:400 44px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#c9c2c5">Rest</div>
+    <div style="position:absolute;left:890px;top:0;font:400 40px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#E8B11F">Joy</div>
+    <div style="position:absolute;left:1560px;top:560px;font:400 40px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#c9c2c5">Kalinga</div>
+    <div style="position:absolute;left:300px;top:300px;font:400 40px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#c9c2c5">Grace</div>
+    <div style="position:absolute;left:1120px;top:280px;font:400 38px/0.95 'Anton',sans-serif;text-transform:uppercase;color:#F26A77">Guidance</div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.1);padding-top:24px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="/_blob/d5aa0b5826aeb973f3d7d125aae526dc" alt="Quest Laguna" style="width:36px;height:36px;border-radius:50%">
+      <span style="font:600 18px/1 'Poppins',sans-serif;color:#ffffff">Quest Respond</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:28px;font:500 20px/1 'Manrope',sans-serif;color:#c9c2c5">
+      <span>Bigger word = more people said it</span>
+      <span style="width:6px;height:6px;border-radius:50%;background:#c9c2c5"></span>
+      <span>Join at quest.ph/respond · code <strong style="color:#ffffff;letter-spacing:.08em">{{code}}</strong></span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"code":{"editor":"text","default":"4821"},"answers":{"editor":"int","default":128,"min":0,"max":5000},"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { code: this.props.code ?? '4821', answers: this.props.answers ?? 128 };
+  }
+}
+</script>
+</body>
+</html>

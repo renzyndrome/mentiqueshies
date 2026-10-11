@@ -1,0 +1,29 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-10-11T03:30:00Z" },
+  "title": "Quest Respond",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 390, "h": 844, "title": "Phone · Join", "is_interactive": true },
+    "Answer.dc.html": { "x": 470, "y": 0, "w": 390, "h": 844, "title": "Phone · Open answer", "is_interactive": true },
+    "Scale.dc.html": { "x": 940, "y": 0, "w": 390, "h": 844, "title": "Phone · Scale", "is_interactive": true },
+    "Sent.dc.html": { "x": 1410, "y": 0, "w": 390, "h": 844, "title": "Phone · Sent" },
+    "ScreenJoin.dc.html": { "x": 0, "y": 1200, "w": 1920, "h": 1080, "title": "Screen · Join" },
+    "ScreenCloud.dc.html": { "x": 2000, "y": 1200, "w": 1920, "h": 1080, "title": "Screen · Word cloud" },
+    "ScreenBars.dc.html": { "x": 4000, "y": 1200, "w": 1920, "h": 1080, "title": "Screen · Choice results" },
+    "ScreenWall.dc.html": { "x": 0, "y": 2400, "w": 1920, "h": 1080, "title": "Screen · Promise wall" },
+    "ScreenScale.dc.html": { "x": 2000, "y": 2400, "w": 1920, "h": 1080, "title": "Screen · Scale result" },
+    "Admin.dc.html": { "x": 0, "y": 3700, "w": 1360, "h": 1180, "title": "Admin · Analytics", "expand": "fill", "is_interactive": true },
+    "Presenter.dc.html": { "x": 1440, "y": 3700, "w": 1360, "h": 900, "title": "Admin · Presenter", "expand": "fill", "is_interactive": true }
+  },
+  "order": ["Main.dc.html", "Answer.dc.html", "Scale.dc.html", "Sent.dc.html", "ScreenJoin.dc.html", "ScreenCloud.dc.html", "ScreenBars.dc.html", "ScreenWall.dc.html", "ScreenScale.dc.html", "Admin.dc.html", "Presenter.dc.html"],
+  "notes": {
+    "t-phone": { "x": 0, "y": -300, "text": "Attendee phone · scan, answer, done", "kind": "title1", "maxW": 1800 },
+    "t-screen": { "x": 0, "y": 900, "text": "Big screen · live results", "kind": "title1", "maxW": 5920 },
+    "t-admin": { "x": 0, "y": 3400, "text": "Admin · analytics and presenter control", "kind": "title1", "maxW": 2800 }
+  },
+  "designSystems": [
+    { "title": "Quest Laguna", "namespace": "quest-laguna", "artifact": "https://claude.ai/artifact/VZazdqaF76d15xE7qdYxm2", "version": "1791675678-1c82", "copiedAt": "2026-10-11T03:30:00Z" }
+  ]
+}

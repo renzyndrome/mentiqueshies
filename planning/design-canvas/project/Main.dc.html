@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Join tonight's question</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0;background:#ffffff;font-family:'Manrope',system-ui,sans-serif;color:#141315}
+a{color:#8E0E1E}a:hover{color:#B81529}
+input,select{font-family:'Manrope',system-ui,sans-serif}
+input:focus,select:focus,button:focus-visible{outline:2px solid #D81E2F;outline-offset:2px}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:linear-gradient(180deg,#FBF5E9 0%,#ffffff 55%);display:flex;flex-direction:column;padding:64px 24px 32px;gap:0">
+
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="/_blob/d5aa0b5826aeb973f3d7d125aae526dc" alt="Quest Laguna" style="width:38px;height:38px;border-radius:50%">
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <div style="font:600 17px/1 'Poppins',sans-serif;color:#141315">Quest</div>
+      <div style="font:600 10px/1 'Poppins',sans-serif;letter-spacing:.26em;color:#8E0E1E">LAGUNA</div>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-top:48px;font:700 12px/1 'Manrope',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#8E0E1E">
+    <span style="letter-spacing:-.12em;color:#D81E2F;font-size:14px">›››</span>
+    <span>Sunday Family Service</span>
+  </div>
+  <h1 style="margin:22px 0 0;font:600 36px/1.15 'Poppins',sans-serif;letter-spacing:-.015em;color:#141315">Welcome home.</h1>
+  <p style="margin:14px 0 0;font:400 16px/1.65 'Manrope',sans-serif;color:#4a4346">After the message we will ask one question. Your answer goes up on the big screen with everyone else's.</p>
+
+  <div style="display:flex;flex-direction:column;gap:20px;margin-top:36px">
+    <label style="display:flex;flex-direction:column;gap:8px">
+      <span style="font:600 13px/1 'Manrope',sans-serif;color:#141315">Your name <span style="font-weight:500;color:#6b6266">(optional)</span></span>
+      <input type="text" placeholder="Maria" style="box-sizing:border-box;width:100%;height:52px;border:1px solid #b7b2b4;border-radius:14px;padding:0 16px;font-size:16px;color:#141315;background:#ffffff">
+    </label>
+    <label style="display:flex;flex-direction:column;gap:8px">
+      <span style="font:600 13px/1 'Manrope',sans-serif;color:#141315">Your location</span>
+      <select style="box-sizing:border-box;width:100%;height:52px;border:1px solid #b7b2b4;border-radius:14px;padding:0 16px;font-size:16px;color:#141315;background:#ffffff">
+        <option>San Pedro</option>
+        <option>Biñan</option>
+        <option>Santa Rosa</option>
+        <option>Cabuyao</option>
+        <option>Calamba</option>
+        <option>I'm visiting today</option>
+      </select>
+    </label>
+  </div>
+
+  <a href="Answer.dc.html" style="margin-top:28px;display:flex;align-items:center;justify-content:center;height:56px;border-radius:999px;background:#D81E2F;color:#ffffff;font:600 16px/1 'Manrope',sans-serif;text-decoration:none">Join tonight's question</a>
+
+  <div style="margin-top:auto;display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;align-items:center;gap:10px;font:500 13px/1.4 'Manrope',sans-serif;color:#6b6266">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8E0E1E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      <span>Your name is only shown if you add it. Nothing else is shared.</span>
+    </div>
+    <div style="font:500 13px/1.4 'Manrope',sans-serif;color:#6b6266">Code <strong style="font-weight:700;color:#141315;letter-spacing:.08em">{{code}}</strong> · quest.ph/respond</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"code":{"editor":"text","default":"4821"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { code: this.props.code ?? '4821' };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Open answer</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0;background:#ffffff;font-family:'Manrope',system-ui,sans-serif;color:#141315}
+a{color:#8E0E1E}a:hover{color:#B81529}
+textarea{font-family:'Manrope',system-ui,sans-serif}
+textarea:focus,button:focus-visible{outline:2px solid #D81E2F;outline-offset:2px}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#ffffff;display:flex;flex-direction:column;padding:56px 24px 32px">
+
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="/_blob/d5aa0b5826aeb973f3d7d125aae526dc" alt="Quest Laguna" style="width:30px;height:30px;border-radius:50%">
+      <span style="font:600 14px/1 'Poppins',sans-serif;color:#141315">Quest Respond</span>
+    </div>
+    <span style="display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:#FDE4E7;color:#8E0E1E;padding:7px 12px;font:700 10px/1 'Manrope',sans-serif;letter-spacing:.08em;text-transform:uppercase">
+      <span style="width:6px;height:6px;border-radius:50%;background:#D81E2F"></span>Live
+    </span>
+  </div>
+
+  <div style="display:flex;gap:6px;margin-top:28px">
+    <div style="flex:1;height:4px;border-radius:999px;background:#D81E2F"></div>
+    <div style="flex:1;height:4px;border-radius:999px;background:#F4ECDC"></div>
+    <div style="flex:1;height:4px;border-radius:999px;background:#F4ECDC"></div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-top:28px;font:700 12px/1 'Manrope',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#8E0E1E">
+    <span style="letter-spacing:-.12em;color:#D81E2F;font-size:14px">›››</span>
+    <span>Question 1 of 3</span>
+  </div>
+  <h1 style="margin:18px 0 0;font:600 28px/1.25 'Poppins',sans-serif;letter-spacing:-.01em;color:#141315">What is one promise from God you are holding on to this week?</h1>
+  <p style="margin:12px 0 0;font:400 15px/1.6 'Manrope',sans-serif;color:#4a4346">One word or one short sentence. Tagalog or English, both are fine.</p>
+
+  <div style="display:flex;flex-direction:column;gap:8px;margin-top:28px">
+    <textarea aria-label="Your answer" placeholder="Hindi Niya ako iiwan." style="box-sizing:border-box;width:100%;min-height:132px;border:1px solid #b7b2b4;border-radius:14px;padding:14px 16px;font-size:17px;line-height:1.5;color:#141315;background:#ffffff;resize:none"></textarea>
+    <div style="display:flex;justify-content:space-between;font:500 12px/1 'Manrope',sans-serif;color:#6b6266">
+      <span>Show my name: Maria</span>
+      <span>{{count}} / 80</span>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:20px">
+    <button type="button" style="border:1px solid #e4e1e2;background:#ffffff;color:#3a3437;border-radius:999px;padding:10px 14px;font:600 12px/1 'Manrope',sans-serif;cursor:pointer">Peace</button>
+    <button type="button" style="border:1px solid #e4e1e2;background:#ffffff;color:#3a3437;border-radius:999px;padding:10px 14px;font:600 12px/1 'Manrope',sans-serif;cursor:pointer">Provision</button>
+    <button type="button" style="border:1px solid #e4e1e2;background:#ffffff;color:#3a3437;border-radius:999px;padding:10px 14px;font:600 12px/1 'Manrope',sans-serif;cursor:pointer">Healing</button>
+    <button type="button" style="border:1px solid #e4e1e2;background:#ffffff;color:#3a3437;border-radius:999px;padding:10px 14px;font:600 12px/1 'Manrope',sans-serif;cursor:pointer">He is with me</button>
+  </div>
+
+  <a href="Sent.dc.html" style="margin-top:auto;display:flex;align-items:center;justify-content:center;height:56px;border-radius:999px;background:#D81E2F;color:#ffffff;font:600 16px/1 'Manrope',sans-serif;text-decoration:none">Send my answer</a>
+  <p style="margin:14px 0 0;text-align:center;font:500 12px/1.4 'Manrope',sans-serif;color:#6b6266">Answers are screened by the media team before they show.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { count: 0 };
+  }
+}
+</script>
+</body>
+</html>

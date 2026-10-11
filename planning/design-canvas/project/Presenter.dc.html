@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Presenter control</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0;background:#FBF5E9;font-family:'Manrope',system-ui,sans-serif;color:#141315}
+a{color:#8E0E1E}a:hover{color:#B81529}
+button{font-family:'Manrope',system-ui,sans-serif}
+button:focus-visible,a:focus-visible{outline:2px solid #D81E2F;outline-offset:2px}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#FBF5E9;display:flex;flex-wrap:wrap">
+
+  <nav aria-label="Admin" style="flex:0 0 240px;box-sizing:border-box;background:#141315;color:#ffffff;padding:28px 20px;display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="/_blob/d5aa0b5826aeb973f3d7d125aae526dc" alt="Quest Laguna" style="width:34px;height:34px;border-radius:50%">
+      <div style="display:flex;flex-direction:column;gap:3px">
+        <div style="font:600 15px/1 'Poppins',sans-serif">Quest Respond</div>
+        <div style="font:600 9px/1 'Poppins',sans-serif;letter-spacing:.26em;color:#F26A77">ADMIN</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <a href="Admin.dc.html" style="display:flex;align-items:center;gap:10px;border-radius:999px;padding:10px 14px;color:#c9c2c5;font:600 14px/1 'Manrope',sans-serif;text-decoration:none">Analytics</a>
+      <a href="Presenter.dc.html" style="display:flex;align-items:center;gap:10px;border-radius:999px;padding:10px 14px;background:#D81E2F;color:#ffffff;font:600 14px/1 'Manrope',sans-serif;text-decoration:none">Presenter</a>
+      <a href="Admin.dc.html#questions" style="display:flex;align-items:center;gap:10px;border-radius:999px;padding:10px 14px;color:#c9c2c5;font:600 14px/1 'Manrope',sans-serif;text-decoration:none">Questions</a>
+      <a href="Admin.dc.html#moderation" style="display:flex;align-items:center;gap:10px;border-radius:999px;padding:10px 14px;color:#c9c2c5;font:600 14px/1 'Manrope',sans-serif;text-decoration:none">Moderation</a>
+    </div>
+    <div style="margin-top:auto;font:500 12px/1.5 'Manrope',sans-serif;color:#a39a9e">Signed in as Media team · San Pedro</div>
+  </nav>
+
+  <main style="flex:999 1 560px;min-width:0;box-sizing:border-box;padding:36px 40px;display:flex;flex-direction:column;gap:24px">
+
+    <header style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font:700 12px/1 'Manrope',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#8E0E1E">Presenter</div>
+        <h1 style="margin:0;font:600 32px/1.15 'Poppins',sans-serif;letter-spacing:-.01em">Sunday Family Service · Oct 11</h1>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:#FDE4E7;color:#8E0E1E;padding:10px 16px;font:700 11px/1 'Manrope',sans-serif;letter-spacing:.08em;text-transform:uppercase"><span style="width:8px;height:8px;border-radius:50%;background:#D81E2F"></span>Live · {{joined}} joined</span>
+        <span style="font:600 20px/1 'Poppins',sans-serif;letter-spacing:.12em">{{code}}</span>
+      </div>
+    </header>
+
+    <div style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px">
+
+      <section aria-label="Questions" style="display:flex;flex-direction:column;gap:12px">
+        <sc-for list="{{questions}}" as="q" hint-placeholder-count="3">
+          <sc-if value="{{q.active}}" hint-placeholder-val="{{true}}">
+            <div style="background:#ffffff;border:1px solid rgba(216,30,47,.55);border-radius:18px;padding:22px 24px;display:flex;flex-direction:column;gap:14px;box-shadow:0 10px 28px rgba(0,0,0,.06)">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <div style="display:flex;align-items:center;gap:10px"><span style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#D81E2F;color:#ffffff;font:600 14px/1 'Poppins',sans-serif">{{q.n}}</span><span style="font:700 11px/1 'Manrope',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8E0E1E">{{q.type}} · on screen</span></div>
+                <span style="font:600 13px/1 'Manrope',sans-serif;color:#4a4346">{{q.answers}} answers</span>
+              </div>
+              <div style="font:600 20px/1.3 'Poppins',sans-serif">{{q.text}}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <button type="button" onClick="{{q.pick}}" style="height:40px;border:0;border-radius:999px;padding:0 16px;background:#D81E2F;color:#ffffff;font:600 13px/1 'Manrope',sans-serif;cursor:pointer">Showing</button>
+                <button type="button" style="height:40px;border:1px solid #b7b2b4;border-radius:999px;padding:0 16px;background:#ffffff;font:600 13px/1 'Manrope',sans-serif;cursor:pointer">Close answers</button>
+                <button type="button" style="height:40px;border:1px solid #b7b2b4;border-radius:999px;padding:0 16px;background:#ffffff;font:600 13px/1 'Manrope',sans-serif;cursor:pointer">Switch view</button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{q.idle}}" hint-placeholder-val="{{false}}">
+            <div style="background:#ffffff;border:1px solid #e4e1e2;border-radius:18px;padding:22px 24px;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+                <div style="display:flex;align-items:center;gap:10px"><span style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:#FBF5E9;color:#8E0E1E;font:600 14px/1 'Poppins',sans-serif">{{q.n}}</span><span style="font:700 11px/1 'Manrope',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#6b6266">{{q.type}}</span></div>
+                <span style="font:600 13px/1 'Manrope',sans-serif;color:#6b6266">{{q.answers}} answers</span>
+              </div>
+              <div style="font:600 20px/1.3 'Poppins',sans-serif;color:#3a3437">{{q.text}}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <button type="button" onClick="{{q.pick}}" style="height:40px;border:1px solid #b7b2b4;border-radius:999px;padding:0 16px;background:#ffffff;font:600 13px/1 'Manrope',sans-serif;color:#141315;cursor:pointer">Show on screen</button>
+                <button type="button" style="height:40px;border:0;border-radius:999px;padding:0 12px;background:transparent;font:600 13px/1 'Manrope',sans-serif;color:#8E0E1E;text-decoration:underline;text-underline-offset:4px;cursor:pointer">Edit</button>
+              </div>
+            </div>
+          </sc-if>
+        </sc-for>
+        <button type="button" style="height:48px;border:1px dashed rgba(142,14,30,.35);border-radius:18px;background:transparent;font:600 14px/1 'Manrope',sans-serif;color:#8E0E1E;cursor:pointer">+ Add a question</button>
+      </section>
+
+      <aside aria-label="Screen preview" style="display:flex;flex-direction:column;gap:16px">
+        <div style="background:#ffffff;border:1px solid #e4e1e2;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <h2 style="margin:0;font:600 16px/1.3 'Poppins',sans-serif">On the big screen now</h2>
+            <span style="font:600 12px/1 'Manrope',sans-serif;color:#6b6266">Moriah Hall</span>
+          </div>
+          <div style="aspect-ratio:16/9;border-radius:12px;background:linear-gradient(180deg,#2E0408 0%,#0B0B0C 100%);padding:18px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;color:#ffffff">
+            <div style="font:700 9px/1 'Manrope',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F26A77">››› Question {{activeN}} of 3</div>
+            <div style="font:600 15px/1.3 'Poppins',sans-serif">{{activeText}}</div>
+            <div style="font:500 10px/1 'Manrope',sans-serif;color:#c9c2c5">quest.ph/respond · {{code}}</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <a href="ScreenCloud.dc.html" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;border-radius:999px;border:1px solid #b7b2b4;font:600 13px/1 'Manrope',sans-serif;color:#141315;text-decoration:none">Word cloud</a>
+            <a href="ScreenWall.dc.html" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;border-radius:999px;border:1px solid #b7b2b4;font:600 13px/1 'Manrope',sans-serif;color:#141315;text-decoration:none">Wall</a>
+            <a href="ScreenBars.dc.html" style="flex:1;display:flex;align-items:center;justify-content:center;height:40px;border-radius:999px;border:1px solid #b7b2b4;font:600 13px/1 'Manrope',sans-serif;color:#141315;text-decoration:none">Bars</a>
+          </div>
+        </div>
+
+        <div style="background:#ffffff;border:1px solid #e4e1e2;border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:12px">
+          <h2 style="margin:0;font:600 16px/1.3 'Poppins',sans-serif">Quick actions</h2>
+          <a href="ScreenJoin.dc.html" style="display:flex;align-items:center;justify-content:center;height:44px;border-radius:999px;background:#D81E2F;color:#ffffff;font:600 14px/1 'Manrope',sans-serif;text-decoration:none">Show join screen</a>
+          <button type="button" style="height:44px;border:1px solid #b7b2b4;border-radius:999px;background:#ffffff;font:600 14px/1 'Manrope',sans-serif;color:#141315;cursor:pointer">Pause new answers</button>
+          <button type="button" style="height:44px;border:1px solid #b7b2b4;border-radius:999px;background:#ffffff;font:600 14px/1 'Manrope',sans-serif;color:#141315;cursor:pointer">Blank the screen</button>
+          <p style="margin:4px 0 0;font:400 13px/1.5 'Manrope',sans-serif;color:#4a4346">Answers wait in moderation until the media team shows them. Scale results show totals only.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"code":{"editor":"text","default":"4821"},"$preview":{"width":1360,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { active: 1 };
+  }
+  renderVals() {
+    const data = [
+      { n: 1, type: 'Open answer', text: 'What is one promise from God you are holding on to this week?', answers: 128 },
+      { n: 2, type: 'Scale 1 to 5', text: 'How close did you feel to God during today’s service?', answers: 128 },
+      { n: 3, type: 'Multiple choice', text: 'Which part of today’s service spoke to you the most?', answers: 121 }
+    ];
+    const questions = data.map((q) => {
+      const active = this.state.active === q.n;
+      return { ...q, active, idle: !active, pick: () => this.setState({ active: q.n }) };
+    });
+    const current = data.find((q) => q.n === this.state.active) || data[0];
+    return { questions, activeN: current.n, activeText: current.text, code: this.props.code ?? '4821', joined: 128 };
+  }
+}
+</script>
+</body>
+</html>

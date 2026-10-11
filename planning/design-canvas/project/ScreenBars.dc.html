@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Big screen: choice results</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+body{margin:0;background:#0B0B0C;font-family:'Manrope',system-ui,sans-serif;color:#ffffff}
+a{color:#F26A77}a:hover{color:#ffffff}
+</style>
+</helmet>
+<div style="width:1920px;height:1080px;box-sizing:border-box;background:#0B0B0C;display:flex;flex-direction:column;padding:72px 120px 64px">
+
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:48px">
+    <div style="display:flex;flex-direction:column;gap:18px;max-width:1240px">
+      <div style="display:flex;align-items:center;gap:14px;font:700 18px/1 'Manrope',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#F26A77">
+        <span style="letter-spacing:-.12em;color:#D81E2F;font-size:22px">›››</span>
+        <span>Question 3 of 3</span>
+      </div>
+      <h1 style="margin:0;font:600 52px/1.15 'Poppins',sans-serif;letter-spacing:-.015em;color:#ffffff">Which part of today's service spoke to you the most?</h1>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;flex-shrink:0;border-radius:999px;border:1px solid rgba(255,255,255,.18);padding:16px 26px">
+      <span style="width:12px;height:12px;border-radius:50%;background:#E8B11F"></span>
+      <span style="font:600 28px/1 'Poppins',sans-serif;color:#ffffff">{{total}}</span>
+      <span style="font:500 20px/1 'Manrope',sans-serif;color:#c9c2c5">answers</span>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:28px;margin-top:72px;flex:1">
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="5">
+      <div style="display:grid;grid-template-columns:420px minmax(0,1fr) 200px;align-items:center;gap:32px">
+        <div style="font:600 30px/1.2 'Poppins',sans-serif;color:#ffffff">{{r.label}}</div>
+        <div style="position:relative;height:64px;border-radius:999px;background:#2a2326;overflow:hidden">
+          <div style="position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:{{r.fill}};width:{{r.width}}"></div>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:10px;justify-content:flex-end">
+          <span style="font:600 44px/1 'Poppins',sans-serif;color:#ffffff">{{r.pct}}%</span>
+          <span style="font:500 20px/1 'Manrope',sans-serif;color:#a39a9e">{{r.n}}</span>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.1);padding-top:24px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="/_blob/d5aa0b5826aeb973f3d7d125aae526dc" alt="Quest Laguna" style="width:36px;height:36px;border-radius:50%">
+      <span style="font:600 18px/1 'Poppins',sans-serif;color:#ffffff">Quest Respond</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:28px;font:500 20px/1 'Manrope',sans-serif;color:#c9c2c5">
+      <span>Red = most chosen</span>
+      <span style="width:6px;height:6px;border-radius:50%;background:#c9c2c5"></span>
+      <span>Join at quest.ph/respond · code <strong style="color:#ffffff;letter-spacing:.08em">{{code}}</strong></span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"code":{"editor":"text","default":"4821"},"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const data = [
+      { label: 'The message', n: 61 },
+      { label: 'Worship', n: 38 },
+      { label: 'A testimony', n: 17 },
+      { label: 'Prayer time', n: 9 },
+      { label: 'Fellowship after', n: 3 }
+    ];
+    const total = data.reduce((s, d) => s + d.n, 0);
+    const max = Math.max(...data.map((d) => d.n));
+    const rows = data.map((d, i) => ({
+      label: d.label,
+      n: d.n,
+      pct: Math.round((d.n / total) * 100),
+      width: Math.round((d.n / max) * 100) + '%',
+      fill: i === 0 ? '#D81E2F' : '#F26A77'
+    }));
+    return { rows, total, code: this.props.code ?? '4821' };
+  }
+}
+</script>
+</body>
+</html>

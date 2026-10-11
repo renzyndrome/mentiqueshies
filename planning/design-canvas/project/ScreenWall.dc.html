@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Big screen: promise wall</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@600&family=Manrope:wght@400;500;600;700&family=Sacramento&display=swap">
+<style>
+body{margin:0;background:#FBF5E9;font-family:'Manrope',system-ui,sans-serif;color:#141315}
+a{color:#8E0E1E}a:hover{color:#B81529}
+</style>
+</helmet>
+<div style="width:1920px;height:1080px;box-sizing:border-box;background:linear-gradient(180deg,#FBF5E9 0%,#EFE3CB 100%);display:flex;padding:72px 120px 64px;gap:72px">
+
+  <div style="width:560px;display:flex;flex-direction:column;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:14px;font:700 18px/1 'Manrope',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:#8E0E1E">
+      <span style="letter-spacing:-.12em;color:#D81E2F;font-size:22px">›››</span>
+      <span>Promise wall</span>
+    </div>
+    <div style="margin-top:28px;font:400 72px/1 'Sacramento',cursive;color:#8E0E1E">Isang dekada ng katapatan</div>
+    <h1 style="margin:16px 0 0;font:400 132px/0.95 'Anton',sans-serif;text-transform:uppercase;letter-spacing:-.01em;color:#141315">Hold<br>on to it</h1>
+    <p style="margin:32px 0 0;font:400 24px/1.55 'Manrope',sans-serif;color:#4a4346">Every card is one person in this room tonight. New ones land as they arrive.</p>
+
+    <div style="margin-top:auto;display:flex;flex-direction:column;gap:18px">
+      <div style="border-radius:20px;background:#141315;padding:32px 36px;box-shadow:0 16px 44px rgba(0,0,0,.14)">
+        <div style="font:700 12px/1 'Manrope',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#F26A77">Just in · Maria, San Pedro</div>
+        <div style="margin-top:14px;font:600 34px/1.25 'Poppins',sans-serif;color:#ffffff">"Hindi Niya ako iiwan."</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font:500 18px/1 'Manrope',sans-serif;color:#4a4346">
+        <span style="width:10px;height:10px;border-radius:50%;background:#D81E2F"></span>
+        {{answers}} promises and counting · code {{code}}
+      </div>
+    </div>
+  </div>
+
+  <div style="flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(0,1fr);gap:20px">
+    <div style="border-radius:18px;background:#ffffff;border:1px solid #e4e1e2;padding:28px;display:flex;flex-direction:column;gap:12px;transform:rotate(-1.5deg)">
+      <div style="width:34px;height:3px;background:#D81E2F;border-radius:4px"></div>
+      <div style="font:600 24px/1.3 'Poppins',sans-serif;color:#141315">He will never leave me nor forsake me.</div>
+      <div style="margin-top:auto;font:600 13px/1 'Manrope',sans-serif;color:#6b6266">Joshua 1:9 · Calamba</div>
+    </div>
+    <div style="border-radius:18px;background:#D81E2F;padding:28px;display:flex;flex-direction:column;gap:12px;transform:rotate(1deg)">
+      <div style="width:34px;height:3px;background:#ffffff;border-radius:4px"></div>
+      <div style="font:600 24px/1.3 'Poppins',sans-serif;color:#ffffff">Provision for my family this month.</div>
+      <div style="margin-top:auto;font:600 13px/1 'Manrope',sans-serif;color:#FDE4E7">Anonymous · Biñan</div>
+    </div>
+    <div style="border-radius:18px;background:#ffffff;border:1px solid #e4e1e2;padding:28px;display:flex;flex-direction:column;gap:12px;transform:rotate(-0.5deg)">
+      <div style="width:34px;height:3px;background:#D81E2F;border-radius:4px"></div>
+      <div style="font:600 24px/1.3 'Poppins',sans-serif;color:#141315">Peace that passes understanding.</div>
+      <div style="margin-top:auto;font:600 13px/1 'Manrope',sans-serif;color:#6b6266">Jed · Santa Rosa</div>
+    </div>
+    <div style="border-radius:18px;background:#141315;padding:28px;display:flex;flex-direction:column;gap:12px;transform:rotate(0.8deg)">
+      <div style="width:34px;height:3px;background:#E8B11F;border-radius:4px"></div>
+      <div style="font:600 24px/1.3 'Poppins',sans-serif;color:#ffffff">Healing for my mother.</div>
+      <div style="margin-top:auto;font:600 13px/1 'Manrope',sans-serif;color:#c9c2c5">Anonymous · San Pedro</div>
+    </div>
+    <div style="border-radius:18px;background:#ffffff;border:1px solid #e4e1e2;padding:28px;display:flex;flex-direction:column;gap:12px;transform:rotate(-1deg)">
+      <div style="width:34px;height:3px;background:#D81E2F;border-radius:4px"></div>
+      <div style="font:600 24px/1.3 'Poppins',sans-serif;color:#141315">His mercies are new every morning.</div>
+      <div style="margin-top:auto;font:600 13px/1 'Manrope',sans-serif;color:#6b6266">Lam 3:23 · Cabuyao</div>
+    </div>
+    <div style="border-radius:18px;background:#FDE4E7;padding:28px;display:flex;flex-direction:column;gap:12px;transform:rotate(1.4deg)">
+      <div style="width:34px;height:3px;background:#8E0E1E;border-radius:4px"></div>
+      <div style="font:600 24px/1.3 'Poppins',sans-serif;color:#141315">Kasama ko Siya sa board exam.</div>
+      <div style="margin-top:auto;font:600 13px/1 'Manrope',sans-serif;color:#8E0E1E">Kent · Young Pro</div>
+    </div>
+    <div style="border-radius:18px;background:#ffffff;border:1px solid #e4e1e2;padding:28px;display:flex;flex-direction:column;gap:12px;transform:rotate(0.4deg)">
+      <div style="width:34px;height:3px;background:#D81E2F;border-radius:4px"></div>
+      <div style="font:600 24px/1.3 'Poppins',sans-serif;color:#141315">Strength when I am weak.</div>
+      <div style="margin-top:auto;font:600 13px/1 'Manrope',sans-serif;color:#6b6266">Anonymous · Calamba</div>
+    </div>
+    <div style="border-radius:18px;background:#ffffff;border:1px solid #e4e1e2;padding:28px;display:flex;flex-direction:column;gap:12px;transform:rotate(-1.2deg)">
+      <div style="width:34px;height:3px;background:#D81E2F;border-radius:4px"></div>
+      <div style="font:600 24px/1.3 'Poppins',sans-serif;color:#141315">A way where there seems to be no way.</div>
+      <div style="margin-top:auto;font:600 13px/1 'Manrope',sans-serif;color:#6b6266">Ana · Santa Rosa</div>
+    </div>
+    <div style="border-radius:18px;background:#E8B11F;padding:28px;display:flex;flex-direction:column;gap:12px;transform:rotate(0.9deg)">
+      <div style="width:34px;height:3px;background:#141315;border-radius:4px"></div>
+      <div style="font:600 24px/1.3 'Poppins',sans-serif;color:#141315">Joy in the morning.</div>
+      <div style="margin-top:auto;font:600 13px/1 'Manrope',sans-serif;color:#3a3437">Youth · San Pedro</div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"code":{"editor":"text","default":"4821"},"answers":{"editor":"int","default":128,"min":0,"max":5000},"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { code: this.props.code ?? '4821', answers: this.props.answers ?? 128 };
+  }
+}
+</script>
+</body>
+</html>
