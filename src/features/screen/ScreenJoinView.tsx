@@ -28,7 +28,7 @@ export function ScreenJoinView({ joined, publicUrl, host }: ScreenJoinViewProps)
           Watch.
         </h1>
         <p className="mt-9 max-w-[640px] text-[28px] leading-[1.5] text-fg-muted">
-          One question after the message. Your answers show up here, together.
+          Your answers show here.
         </p>
         <div className="mt-16 flex items-center gap-3">
           <span aria-hidden="true" className="size-3.5 rounded-full bg-gold-500" />

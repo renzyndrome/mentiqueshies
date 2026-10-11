@@ -37,11 +37,8 @@ export function SentView({ text, closed, onChangeAnswer }: SentViewProps) {
           <>
             <div className="eyebrow mt-8 justify-center">Salamat.</div>
             <h1 className="mt-4 font-wordmark text-[32px] leading-[1.2] font-semibold tracking-[-0.015em] text-white">
-              Your answer is on its way to the screen.
+              Your answer is on the screen.
             </h1>
-            <p className="mt-3.5 max-w-[300px] text-[15px] leading-[1.65] text-fg-muted">
-              Look up. It will show with everyone else&apos;s in a moment.
-            </p>
           </>
         )}
 

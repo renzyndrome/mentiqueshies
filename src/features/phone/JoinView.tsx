@@ -22,8 +22,7 @@ export function JoinView({ title, host, joining, error, onJoin }: JoinViewProps)
           Welcome home.
         </h1>
         <p className="mt-3.5 text-base leading-[1.65] text-fg-muted">
-          After the message we will ask one question. Your answer goes up on the big screen with everyone
-          else&apos;s.
+          One question. Your answer goes on the big screen.
         </p>
 
         <button type="button" className="btn-primary mt-9" onClick={onJoin} disabled={joining} aria-busy={joining}>
@@ -38,7 +37,7 @@ export function JoinView({ title, host, joining, error, onJoin }: JoinViewProps)
         <footer className="mt-auto flex flex-col gap-3 pt-12">
           <div className="flex items-center gap-2.5 text-[13px] leading-[1.4] font-medium text-fg-faint">
             <Lock aria-hidden="true" size={18} strokeWidth={2} color="#8E0E1E" className="shrink-0" />
-            <span>No name or login needed. Nothing else is shared.</span>
+            <span>No name. No login.</span>
           </div>
           <div className="text-[13px] leading-[1.4] font-medium text-fg-faint">{host}</div>
         </footer>

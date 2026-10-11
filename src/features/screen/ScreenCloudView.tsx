@@ -52,8 +52,6 @@ export function ScreenCloudView({ title, questionText, answers, answerCount, hos
       <footer className="flex items-center justify-between border-t border-white/10 pt-6">
         <AppMark size="screen" />
         <div className="flex items-center gap-7 text-[20px] leading-none font-medium text-fg-muted">
-          <span>Bigger word = more people said it</span>
-          <span aria-hidden="true" className="size-1.5 rounded-full bg-[#c9c2c5]" />
           <span>
             Join at <strong className="font-semibold tracking-[0.02em] text-white">{host}</strong>
           </span>

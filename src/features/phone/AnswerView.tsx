@@ -32,7 +32,7 @@ export function AnswerView({ questionText, initialText, sending, error, onSubmit
         {questionText}
       </h1>
       <p className="mt-3 text-[15px] leading-[1.6] text-fg-muted">
-        One word or one short sentence. Tagalog or English, both are fine.
+        One word or a short sentence.
       </p>
 
       <form className="mt-7 flex flex-1 flex-col" onSubmit={handleSubmit} noValidate>
@@ -62,9 +62,6 @@ export function AnswerView({ questionText, initialText, sending, error, onSubmit
           <button type="submit" className="btn-primary" disabled={!valid || sending} aria-busy={sending}>
             Send my answer
           </button>
-          <p className="mt-3.5 text-center text-xs leading-[1.4] font-medium text-fg-faint">
-            Answers show on the big screen. The media team can hide one.
-          </p>
         </div>
       </form>
     </main>

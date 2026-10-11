@@ -67,9 +67,9 @@ describe('AnswerView', () => {
     expect(onSubmit).toHaveBeenCalledWith('Faithful');
   });
 
-  it('shows the moderation line and no name toggle or suggestion chips', () => {
+  it('shows no footer line, name toggle or suggestion chips', () => {
     render(<AnswerView {...baseProps} />);
-    expect(screen.getByText('Answers show on the big screen. The media team can hide one.')).toBeTruthy();
+    expect(screen.queryByText(/media team/)).toBeNull();
     expect(screen.queryByText(/Show my name/)).toBeNull();
     expect(screen.queryByRole('button', { name: 'Peace' })).toBeNull();
   });
