@@ -45,23 +45,51 @@ function setup() {
     expect(res.status).toBe(200);
   };
 
-  return { app, call, admin, advance, publicState, adminState, openQuestion };
+  const closeQuestion = async () => {
+    const res = await admin('PUT', '/api/admin/session', { questionStatus: 'closed' });
+    expect(res.status).toBe(200);
+  };
+
+  return { app, call, admin, advance, publicState, adminState, openQuestion, closeQuestion };
 }
 
+type SessionShape = {
+  title: string;
+  questionText: string;
+  questionStatus: string;
+  screenView: string;
+  questionNumber: number;
+};
+
 type PublicStateShape = {
-  session: { title: string; questionText: string; questionStatus: string; screenView: string };
+  session: SessionShape;
   answers: Array<{ id: number; text: string }>;
   counts: { joined: number; answers: number };
   publicUrl: string;
 };
 
 type AdminStateShape = {
-  session: { title: string; questionText: string; questionStatus: string; screenView: string };
+  session: SessionShape;
   answers: Array<{ id: number; text: string; hidden: boolean }>;
   counts: { joined: number; answers: number; hidden: number };
 };
 
 const token = (n: number) => `device-token-${String(n).padStart(4, '0')}-abcdef`;
+
+const QUESTION_A = 'What is one promise you are holding on to?';
+const QUESTION_B = 'Who will you pray for this week?';
+
+/** Question A opened, answered by two devices, then closed. */
+async function setupAnsweredQuestion() {
+  const env = setup();
+  await env.openQuestion(QUESTION_A);
+  expect((await env.call('POST', '/api/answer', { deviceToken: token(1), text: 'Faithful' })).status).toBe(200);
+  expect((await env.call('POST', '/api/answer', { deviceToken: token(2), text: 'Healing' })).status).toBe(200);
+  await env.closeQuestion();
+  return env;
+}
+
+const sortedTexts = (answers: ReadonlyArray<{ text: string }>) => answers.map((answer) => answer.text).sort();
 
 describe('GET /api/state', () => {
   it('returns the default session, no answers and zero counts', async () => {
@@ -72,6 +100,7 @@ describe('GET /api/state', () => {
     const data = res.json.data as PublicStateShape;
     expect(data.session.questionStatus).toBe('hidden');
     expect(data.session.screenView).toBe('cloud');
+    expect(data.session.questionNumber).toBe(1);
     expect(data.session.title.length).toBeGreaterThan(0);
     expect(data.answers).toEqual([]);
     expect(data.counts).toEqual({ joined: 0, answers: 0 });
@@ -362,6 +391,99 @@ describe('POST /api/admin/reset', () => {
     expect(state.session.questionStatus).toBe('hidden');
     expect(state.session.title).toBe('Sunday Family Service');
   });
+
+  it('moves to a fresh question number and forgets the last opened question', async () => {
+    const { admin, openQuestion, closeQuestion, publicState } = await setupAnsweredQuestion();
+    await openQuestion(QUESTION_B);
+    expect((await publicState()).session.questionNumber).toBe(2);
+
+    await admin('POST', '/api/admin/reset');
+    expect((await publicState()).session.questionNumber).toBe(3);
+
+    // The first open after a reset only records the text.
+    await openQuestion(QUESTION_A);
+    expect((await publicState()).session.questionNumber).toBe(3);
+    await closeQuestion();
+    await openQuestion(QUESTION_A);
+    expect((await publicState()).session.questionNumber).toBe(3);
+  });
+});
+
+describe('opening a different question', () => {
+  it('deletes the answers, moves to question 2 and keeps the joined count', async () => {
+    const { openQuestion, publicState, adminState } = await setupAnsweredQuestion();
+    const before = await publicState();
+    expect(before.counts).toEqual({ joined: 2, answers: 2 });
+    expect(before.session.questionNumber).toBe(1);
+
+    await openQuestion(QUESTION_B);
+
+    const after = await publicState();
+    expect(after.answers).toEqual([]);
+    expect(after.counts).toEqual({ joined: 2, answers: 0 });
+    expect(after.session.questionNumber).toBe(2);
+    expect(after.session.questionText).toBe(QUESTION_B);
+    const admin = await adminState();
+    expect(admin.answers).toEqual([]);
+    expect(admin.counts).toEqual({ joined: 2, answers: 0, hidden: 0 });
+    expect(admin.session.questionNumber).toBe(2);
+  });
+
+  it('takes new answers from the same devices after the clear', async () => {
+    const { call, openQuestion, advance, publicState } = await setupAnsweredQuestion();
+    await openQuestion(QUESTION_B);
+    advance(2_000);
+    expect((await call('POST', '/api/answer', { deviceToken: token(1), text: 'My family' })).status).toBe(200);
+    const state = await publicState();
+    expect(state.answers.map((answer) => answer.text)).toEqual(['My family']);
+    expect(state.counts).toEqual({ joined: 2, answers: 1 });
+  });
+
+  it('keeps the answers when the same question opens again', async () => {
+    const { openQuestion, publicState } = await setupAnsweredQuestion();
+    await openQuestion(`  ${QUESTION_A}  `);
+    const state = await publicState();
+    expect(sortedTexts(state.answers)).toEqual(['Faithful', 'Healing']);
+    expect(state.session.questionNumber).toBe(1);
+  });
+
+  it('keeps the answers when only the status goes back to open', async () => {
+    const { admin, publicState } = await setupAnsweredQuestion();
+    expect((await admin('PUT', '/api/admin/session', { questionStatus: 'open' })).status).toBe(200);
+    const state = await publicState();
+    expect(state.counts.answers).toBe(2);
+    expect(state.session.questionNumber).toBe(1);
+  });
+
+  it('keeps the answers when the text changes while the question is open', async () => {
+    const { call, admin, openQuestion, publicState } = setup();
+    await openQuestion(QUESTION_A);
+    await call('POST', '/api/answer', { deviceToken: token(1), text: 'Faithful' });
+
+    const fixed = 'What is one promise you hold on to?';
+    expect((await admin('PUT', '/api/admin/session', { questionText: fixed })).status).toBe(200);
+
+    const state = await publicState();
+    expect(state.session.questionText).toBe(fixed);
+    expect(state.answers.map((answer) => answer.text)).toEqual(['Faithful']);
+    expect(state.session.questionNumber).toBe(1);
+  });
+
+  it('counts each new question once', async () => {
+    const { openQuestion, closeQuestion, publicState } = await setupAnsweredQuestion();
+    await openQuestion(QUESTION_B);
+    await closeQuestion();
+    await openQuestion('One word for this season?');
+    await closeQuestion();
+    await openQuestion('One word for this season?');
+    expect((await publicState()).session.questionNumber).toBe(3);
+  });
+
+  it('does not take a question number from the admin client', async () => {
+    const { admin, publicState } = setup();
+    expect((await admin('PUT', '/api/admin/session', { questionNumber: 5 })).status).toBe(400);
+    expect((await publicState()).session.questionNumber).toBe(1);
+  });
 });
 
 describe('privacy', () => {
@@ -396,6 +518,7 @@ describe('GET /api/events', () => {
 
     const first = await readUntil('\n\n');
     expect(first).toContain('event: state');
+    expect(first).toContain('"questionNumber":1');
 
     await admin('PUT', '/api/admin/session', { title: 'Live update title' });
     const next = await readUntil('Live update title');

@@ -72,14 +72,14 @@ All JSON responses use `{ ok: true, data }` or `{ ok: false, error }`.
 | Method | Path                       | Auth  | Body / notes |
 | ------ | -------------------------- | ----- | ------------ |
 | GET    | `/api/health`              | none  | Liveness. |
-| GET    | `/api/state`               | none  | Session, visible answers (hidden excluded), counts. `?answers=0` skips the answer list. Question text stays empty until the question opens. |
+| GET    | `/api/state`               | none  | Session (with `questionNumber`), visible answers (hidden excluded), counts. `?answers=0` skips the answer list. Question text stays empty until the question opens. |
 | GET    | `/api/events`              | none  | SSE. `state` event with the same payload as `/api/state`. `?answers=0` for phones. |
 | POST   | `/api/join`                | none  | `{ deviceToken }`. Records a participant once per device. |
 | POST   | `/api/answer`              | none  | `{ deviceToken, text }`. Trimmed, 1 to 80 characters. Upserts per device. 409 when the question is not open. 429 when the same device sends twice within 2s. |
 | GET    | `/api/admin/state`         | admin | Everything, hidden answers included. Never device tokens. |
-| PUT    | `/api/admin/session`       | admin | `{ title?, questionText?, questionStatus?, screenView? }`. Opening needs question text. |
+| PUT    | `/api/admin/session`       | admin | `{ title?, questionText?, questionStatus?, screenView? }`. Opening needs question text. Opening a text different from the last opened question deletes the answers and adds 1 to `questionNumber`. Joined count stays. Re-opening the same text, and edits while open, keep the answers. |
 | PUT    | `/api/admin/answers/:id`   | admin | `{ hidden }`. |
-| POST   | `/api/admin/reset`         | admin | Deletes answers and participants, sets the question to hidden. Title and question text stay. |
+| POST   | `/api/admin/reset`         | admin | Deletes answers and participants, sets the question to hidden, adds 1 to `questionNumber`. Title and question text stay. |
 
 Admin routes need the `x-admin-key` header. Bodies are validated (zod, strict) and capped at 8 KB.
 
@@ -123,7 +123,8 @@ Notes:
 3. Put `/screen` on the projector (full screen). It shows the QR code and the joined count.
 4. After the message: Open question. Pick Cloud or Wall. Hide any answer that should not show.
 5. Close question when done. Blank screen when needed.
-6. Next week: Reset session first.
+6. Next question: type it, then Open question. Opening a different question clears the answers.
+7. Next week: Reset session first.
 
 ## Project layout
 

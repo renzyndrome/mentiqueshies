@@ -9,6 +9,8 @@ export interface SessionState {
   readonly questionText: string;
   readonly questionStatus: QuestionStatus;
   readonly screenView: ScreenView;
+  /** Starts at 1. Goes up by one each time a different question opens. Back to 1 on reset. */
+  readonly questionNumber: number;
   readonly updatedAt: string;
 }
 

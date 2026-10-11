@@ -110,6 +110,7 @@ export function QuestionPanel({ session, run }: { readonly session: SessionState
           Save changes
         </button>
       </div>
+      <p className="text-sm text-fg-faint">Opening a different question clears the answers.</p>
       {draft.dirty ? <p className="text-sm text-fg-faint">Unsaved changes.</p> : null}
       <StatusLine status={status} />
     </section>

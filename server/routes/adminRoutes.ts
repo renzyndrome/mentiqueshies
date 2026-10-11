@@ -4,6 +4,7 @@ import { adminAuth } from '../auth';
 import type { AuthThrottle } from '../authThrottle';
 import type { AppContext } from '../context';
 import { fail, ok, parseBody } from '../http';
+import { toSessionFields } from '../repository';
 import { answerIdSchema, answerVisibilitySchema, sessionUpdateSchema } from '../schemas';
 import { buildAdminState } from '../state';
 
@@ -19,12 +20,12 @@ export function adminRoutes(ctx: AppContext, adminKey: string, throttle: AuthThr
     const body = await parseBody(c, sessionUpdateSchema);
     if (!body.ok) return fail(c, 400, body.error);
 
-    const { updatedAt: _unused, ...current } = ctx.repo.getSession();
-    const next = { ...current, ...body.value };
+    const next = { ...toSessionFields(ctx.repo.getSession()), ...body.value };
     if (next.questionStatus === 'open' && !hasVisibleText(next.questionText)) {
       return fail(c, 400, 'Question text required before opening.');
     }
 
+    // Opening a different question deletes the answers. See questionChange.ts.
     ctx.repo.updateSession(next);
     ctx.broadcaster.notify();
     return ok(c, adminState());

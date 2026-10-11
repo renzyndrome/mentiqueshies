@@ -1,5 +1,6 @@
 import type { Database } from 'bun:sqlite';
 import type { AdminAnswer, QuestionStatus, ScreenView, SessionState } from '../shared/types';
+import { planQuestionChange } from './questionChange';
 
 /** Upper bound on stored rows, a guard against scripted floods. */
 export const MAX_ROWS = 5_000;
@@ -9,6 +10,8 @@ interface SessionRow {
   readonly question_text: string;
   readonly question_status: QuestionStatus;
   readonly screen_view: ScreenView;
+  readonly question_number: number;
+  readonly opened_text: string;
   readonly updated_at: string;
 }
 
@@ -22,10 +25,12 @@ interface AnswerRow {
 
 export type WriteResult = 'ok' | 'full';
 
-export type SessionFields = Omit<SessionState, 'updatedAt'>;
+/** What the admin can set. The question number only changes through the new-question rule. */
+export type SessionFields = Omit<SessionState, 'updatedAt' | 'questionNumber'>;
 
 export interface Repository {
   getSession(): SessionState;
+  /** Writes the fields and applies the new-question rule (questionChange.ts) in one transaction. */
   updateSession(fields: SessionFields): SessionState;
   join(deviceToken: string): WriteResult;
   upsertAnswer(deviceToken: string, text: string): WriteResult;
@@ -41,7 +46,15 @@ const toSession = (row: SessionRow): SessionState => ({
   questionText: row.question_text,
   questionStatus: row.question_status,
   screenView: row.screen_view,
+  questionNumber: row.question_number,
   updatedAt: row.updated_at,
+});
+
+export const toSessionFields = ({ title, questionText, questionStatus, screenView }: SessionState): SessionFields => ({
+  title,
+  questionText,
+  questionStatus,
+  screenView,
 });
 
 const toAnswer = (row: AnswerRow): AdminAnswer => ({
@@ -56,12 +69,14 @@ export function createRepository(db: Database, clock: () => Date): Repository {
   const now = () => clock().toISOString();
 
   const selectSession = db.query<SessionRow, []>(
-    'SELECT title, question_text, question_status, screen_view, updated_at FROM session WHERE id = 1',
+    `SELECT title, question_text, question_status, screen_view, question_number, opened_text, updated_at
+     FROM session WHERE id = 1`,
   );
   const updateSessionStmt = db.query(
-    `UPDATE session SET title = ?, question_text = ?, question_status = ?, screen_view = ?, updated_at = ?
-     WHERE id = 1`,
+    `UPDATE session SET title = ?, question_text = ?, question_status = ?, screen_view = ?, opened_text = ?,
+     updated_at = ? WHERE id = 1`,
   );
+  const nextQuestionNumber = db.query('UPDATE session SET question_number = question_number + 1 WHERE id = 1');
   const insertParticipant = db.query('INSERT OR IGNORE INTO participants (device_token, joined_at) VALUES (?, ?)');
   const participantExists = db.query<{ found: number }, [string]>(
     'SELECT 1 AS found FROM participants WHERE device_token = ?',
@@ -84,13 +99,18 @@ export function createRepository(db: Database, clock: () => Date): Repository {
   );
   const deleteAnswers = db.query('DELETE FROM answers');
   const deleteParticipants = db.query('DELETE FROM participants');
-  const hideQuestion = db.query("UPDATE session SET question_status = 'hidden', updated_at = ? WHERE id = 1");
+  const resetQuestion = db.query(
+    `UPDATE session SET question_status = 'hidden', question_number = question_number + 1, opened_text = '', updated_at = ?
+     WHERE id = 1`,
+  );
 
-  const getSession = (): SessionState => {
+  const getSessionRow = (): SessionRow => {
     const row = selectSession.get();
     if (!row) throw new Error('Session row missing. Database not migrated.');
-    return toSession(row);
+    return row;
   };
+
+  const getSession = (): SessionState => toSession(getSessionRow());
 
   const countParticipants = () => countParticipantsStmt.get()?.total ?? 0;
 
@@ -114,16 +134,39 @@ export function createRepository(db: Database, clock: () => Date): Repository {
     return 'ok';
   });
 
+  const updateSessionTx = db.transaction((fields: SessionFields): void => {
+    const current = getSessionRow();
+    const change = planQuestionChange({
+      previousStatus: current.question_status,
+      nextStatus: fields.questionStatus,
+      nextText: fields.questionText,
+      openedText: current.opened_text,
+      answerCount: countAnswers().total,
+    });
+    if (change.newQuestion) {
+      deleteAnswers.run();
+      nextQuestionNumber.run();
+    }
+    updateSessionStmt.run(
+      fields.title,
+      fields.questionText,
+      fields.questionStatus,
+      fields.screenView,
+      change.openedText,
+      now(),
+    );
+  });
+
   const resetTx = db.transaction(() => {
     deleteAnswers.run();
     deleteParticipants.run();
-    hideQuestion.run(now());
+    resetQuestion.run(now());
   });
 
   return {
     getSession,
     updateSession(fields) {
-      updateSessionStmt.run(fields.title, fields.questionText, fields.questionStatus, fields.screenView, now());
+      updateSessionTx(fields);
       return getSession();
     },
     join: ensureParticipant,

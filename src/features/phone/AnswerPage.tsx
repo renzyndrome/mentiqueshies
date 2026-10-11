@@ -2,7 +2,7 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { postAnswer, postJoin } from '../../lib/api';
 import { getDeviceToken } from '../../lib/deviceToken';
-import { loadLastAnswer, saveLastAnswer } from '../../lib/lastAnswer';
+import { answerTextFor, loadLastAnswer, saveLastAnswer } from '../../lib/lastAnswer';
 import { useDocumentTitle } from '../../lib/useDocumentTitle';
 import { useLiveState } from '../../lib/useLiveState';
 import { AnswerView } from './AnswerView';
@@ -15,7 +15,6 @@ export function AnswerPage() {
   const { edit } = useSearch({ from: '/answer' });
   const { state } = useLiveState({ answers: false });
   const navigate = useNavigate();
-  const [initialText] = useState(() => (edit ? (loadLastAnswer() ?? '') : ''));
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,7 +24,7 @@ export function AnswerPage() {
     void postJoin(getDeviceToken());
   }, []);
 
-  const handleSubmit = async (text: string) => {
+  const handleSubmit = async (text: string, questionNumber: number) => {
     setSending(true);
     setError(null);
     const result = await postAnswer(getDeviceToken(), text);
@@ -34,25 +33,30 @@ export function AnswerPage() {
       setError(result.status === 0 ? 'Not sent. Check the connection and retry.' : result.error);
       return;
     }
-    saveLastAnswer(result.data.text);
+    saveLastAnswer({ text: result.data.text, questionNumber });
     void navigate({ to: '/sent' });
   };
 
   if (!state) return <LoadingView />;
 
-  const { questionStatus, questionText, title } = state.session;
+  const { questionStatus, questionText, questionNumber, title } = state.session;
   if (questionStatus === 'hidden') return <WaitingView title={title} />;
+
+  // Only an answer sent for this same question shows or prefills.
+  const lastText = answerTextFor(loadLastAnswer(), questionNumber);
   if (questionStatus === 'closed') {
-    return <SentView text={loadLastAnswer()} closed onChangeAnswer={() => undefined} />;
+    return <SentView text={lastText} closed onChangeAnswer={() => undefined} />;
   }
 
   return (
     <AnswerView
+      // A new question remounts the form, so a draft for the old one does not carry over.
+      key={questionNumber}
       questionText={questionText}
-      initialText={initialText}
+      initialText={edit ? (lastText ?? '') : ''}
       sending={sending}
       error={error}
-      onSubmit={(text) => void handleSubmit(text)}
+      onSubmit={(text) => void handleSubmit(text, questionNumber)}
     />
   );
 }
