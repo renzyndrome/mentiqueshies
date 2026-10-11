@@ -27,7 +27,7 @@ export function JoinView({ title, host, joining, error, onJoin }: JoinViewProps)
         </p>
 
         <button type="button" className="btn-primary mt-9" onClick={onJoin} disabled={joining} aria-busy={joining}>
-          Join tonight&apos;s question
+          Join today&apos;s question
         </button>
         {error ? (
           <p role="alert" className="mt-3 text-center text-sm font-semibold text-brand-text">

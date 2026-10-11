@@ -27,7 +27,7 @@ export function AnswerView({ questionText, initialText, sending, error, onSubmit
     <main className="phone-shell bg-white">
       <PhoneTopBar live />
 
-      <Eyebrow className="mt-7">Tonight&apos;s question</Eyebrow>
+      <Eyebrow className="mt-7">Today&apos;s question</Eyebrow>
       <h1 className="mt-[18px] font-wordmark text-[28px] leading-[1.25] font-semibold tracking-[-0.01em] text-fg-default">
         {questionText}
       </h1>
@@ -40,7 +40,6 @@ export function AnswerView({ questionText, initialText, sending, error, onSubmit
           <textarea
             aria-label="Your answer"
             aria-describedby="answer-count"
-            placeholder="Hindi Niya ako iiwan."
             maxLength={MAX_ANSWER_LENGTH}
             value={text}
             onChange={(event) => setText(event.target.value)}

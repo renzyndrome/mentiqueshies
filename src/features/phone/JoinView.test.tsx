@@ -29,7 +29,7 @@ describe('JoinView', () => {
   it('calls onJoin when the join button is pressed', () => {
     const onJoin = vi.fn();
     render(<JoinView {...baseProps} onJoin={onJoin} />);
-    fireEvent.click(screen.getByRole('button', { name: "Join tonight's question" }));
+    fireEvent.click(screen.getByRole('button', { name: "Join today's question" }));
     expect(onJoin).toHaveBeenCalledTimes(1);
   });
 

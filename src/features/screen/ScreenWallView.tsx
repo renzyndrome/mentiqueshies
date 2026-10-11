@@ -60,7 +60,7 @@ export function ScreenWallView({ title, questionText, answers, answerCount, host
           {questionText}
         </h1>
         <p className="mt-8 text-[24px] leading-[1.55] text-fg-muted">
-          Every card is one person in this room tonight. New ones land as they arrive.
+          Every card is one person in this room today. New ones land as they arrive.
         </p>
 
         <div className="mt-auto flex flex-col gap-[18px] pt-8">
