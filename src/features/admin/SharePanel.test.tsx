@@ -10,6 +10,7 @@ describe('buildShareLinks', () => {
   it('builds screen and answer links from the public address', () => {
     expect(buildShareLinks('https://example.org/').map((link) => link.url)).toEqual([
       'https://example.org/screen',
+      'https://example.org/qr',
       'https://example.org/answer',
     ]);
   });

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { copyText } from '../../lib/copyText';
+import { answerUrl } from '../screen/answerUrl';
+import { QrCode } from '../screen/QrCode';
 import { buildShareLinks } from './shareLinks';
 import type { ShareLink } from './shareLinks';
 
@@ -20,6 +22,12 @@ export function SharePanel({ publicUrl }: { readonly publicUrl: string }) {
       <h2 id="share-heading" className="font-wordmark text-base leading-[1.3] font-semibold">
         Share links
       </h2>
+      <div className="flex flex-wrap items-center gap-4">
+        <div className="rounded-md border border-ink-100 bg-white p-2">
+          <QrCode value={answerUrl(publicUrl)} size={160} />
+        </div>
+        <p className="max-w-[220px] text-sm text-fg-muted">QR to the phone answer page. Full size at the QR code page link.</p>
+      </div>
       <ul className="flex flex-col gap-3">
         {links.map((link) => (
           <li key={link.id} className="flex flex-col gap-1.5">

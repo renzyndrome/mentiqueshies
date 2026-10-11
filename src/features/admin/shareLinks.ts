@@ -1,5 +1,5 @@
 export interface ShareLink {
-  readonly id: 'screen' | 'answer';
+  readonly id: 'screen' | 'qr' | 'answer';
   readonly label: string;
   readonly url: string;
 }
@@ -9,6 +9,7 @@ export function buildShareLinks(publicUrl: string): readonly ShareLink[] {
   const base = publicUrl.replace(/\/+$/, '');
   return [
     { id: 'screen', label: 'Big screen', url: `${base}/screen` },
+    { id: 'qr', label: 'QR code page', url: `${base}/qr` },
     { id: 'answer', label: 'Phone answer page', url: `${base}/answer` },
   ];
 }
