@@ -4,6 +4,7 @@ import { AnswersPanel } from './AnswersPanel';
 import { QuestionPanel } from './QuestionPanel';
 import { ResetPanel } from './ResetPanel';
 import { ScreenPanel } from './ScreenPanel';
+import { SharePanel } from './SharePanel';
 import { useAdminState } from './useAdminState';
 
 interface AdminDashboardProps {
@@ -52,6 +53,7 @@ export function AdminDashboard({ adminKey, onSignOut, onUnauthorized }: AdminDas
             </div>
             <div className="flex min-w-0 flex-col gap-5">
               <ScreenPanel session={state.session} run={run} />
+              <SharePanel publicUrl={state.publicUrl} />
               <ResetPanel run={run} />
             </div>
           </div>
